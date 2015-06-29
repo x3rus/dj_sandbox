@@ -3,7 +3,11 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+# Mise en place des racoursis de code 
+from django.views import generic
 
+# module version courte de l'affichage avec template
+from django.shortcuts import render
 
 # Import le models pour pourvoir interoger la BD
 from .models import Question, Choice
@@ -11,11 +15,27 @@ from .models import Question, Choice
 # module pour la version longue
 ##from django.template import RequestContext, loader
 
-# module version courte de l'affichage avec template
-from django.shortcuts import render
 
 # module pour generer des exception :D de type 404 (lONG)
 #from django.http import Http404
+
+
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 # Create your views here.
 def index(request):
