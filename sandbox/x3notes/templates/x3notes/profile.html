@@ -1,0 +1,8 @@
+<div>
+{{ user }}
+{% if user.is_anonymous %}
+    <a href="{% url 'x3notes:login' %}">login</a>
+{% else %}
+    <a href="{% url 'x3notes:logout' %}">logout</a>
+{% endif %}
+</div>

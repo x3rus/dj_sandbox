@@ -43,3 +43,5 @@ def auth_user(request):
 #def index(request):
 #    return HttpResponse("It will show list of users")
 
+def profile_user(request):
+    return render(request, 'x3notes/profile.html')

@@ -15,6 +15,7 @@ from . import views
 urlpatterns = [
                 url(r'^$', views.IndexView.as_view(), name='index'),
                 url(r'^auth/$', views.auth_user, name='auth'),
+                url(r'^profile/$', views.profile_user, name='profile'),
                 url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
                 url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
               ]
