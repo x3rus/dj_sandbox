@@ -13,6 +13,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-#                url(r'^$', views.IndexView.as_view(), name='index'),
-                url(r'^$', views.index, name='index'),
+                url(r'^$', views.IndexView.as_view(), name='index'),
+                url(r'^auth/$', views.auth_user, name='auth'),
+                url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
+                url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
               ]

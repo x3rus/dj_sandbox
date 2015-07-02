@@ -1,3 +1,12 @@
 <h1> Listes Users availables </h1>
 
-Users :
+{% if lst_users %}
+    <ul>
+    {% for user in lst_users %}
+        <li>{{ user.username}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Users are available.</p>
+{% endif %}
+
