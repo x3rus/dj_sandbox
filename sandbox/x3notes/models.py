@@ -16,7 +16,7 @@ class Note(models.Model):
     def __str__(self):
         return  '='.join([
             self.text,
-            self.owner,
+            self.owner.username,
         ])
 
 class NoteAuthEmail(models.Model):

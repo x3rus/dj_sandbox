@@ -14,6 +14,7 @@ from . import views
 
 urlpatterns = [
                 url(r'^$', views.IndexView.as_view(), name='index'),
+#                url(r'^(?P<username>[a-zA-Z0-9]+)/$', views.viewuser(), name='viewuser'),
                 url(r'^auth/$', views.auth_user, name='auth'),
                 url(r'^profile/$', views.profile_user, name='profile'),
                 url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
