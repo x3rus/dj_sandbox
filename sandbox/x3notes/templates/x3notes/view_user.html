@@ -1,0 +1,12 @@
+<div>
+    {{username}}'s public notes<br>
+    {% for note in public_notes %}
+        <h3> {{note.title}} </h3>
+        {{note.text}} <br>
+        owner : {{note.owner}} <br>
+    {% endfor %}
+{% if user.is_authenticated and user.username == username %}
+<br><br>
+    Editables notes for : {{username}} <br>
+{% endif %}
+</div>
