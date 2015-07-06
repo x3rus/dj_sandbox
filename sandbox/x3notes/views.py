@@ -8,7 +8,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Models 
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 from .models import Note, NoteAuthEmail
+from .forms import NoteForm
 
 
 # Create your views here.
@@ -31,6 +34,44 @@ def view_user(request,username):
     public_notes = Note.objects.filter(ispublic=True).filter(owner=user2poll)
     context = {'public_notes': public_notes}
     return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
+
+# ajout de l'obligation d'authentification
+# @login_required
+# def add_note(request,username):
+    # TODO est-ce pertinent de valider que l'utilisateur dans l'URL est equivalent a l'utilisateur
+    # authentifier... a analyser ... 
+    # if not request.user.email.endswith('@example.com'):
+    #    return redirect('/login/?next=%s' % request.path)
+#    
+    # Recuperation du user en argument  
+#    p = get_object_or_404(User, username=username)
+#    try:
+#        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+# Username donne la string du nom je fais un recherche pour avoir l'object
+#    user2poll = User.objects.get(username=username)
+#    public_notes = Note.objects.filter(ispublic=True).filter(owner=user2poll)
+#    context = {'public_notes': public_notes}
+#    return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
+
+
+@login_required
+def add_note(request,username):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NoteForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NoteForm()
+
+    return render(request, 'addnote.html', {'form': form})
 
 
 ######################################################################################################
