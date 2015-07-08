@@ -62,7 +62,7 @@ class IndexViewTests(TestCase):
 ########################
 # URL de l'utilisateur #
 class UserViewTests(TestCase):
-    def test_user_view_basic_without_note(self):
+    def test_user_view_anonyme_without_note(self):
         """
         Check user page without note
         """
@@ -71,7 +71,7 @@ class UserViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "testuser's public notes")
 
-    def test_user_view_basic_with_notes(self):
+    def test_user_view_anonyme_with_notes(self):
         """
         Check user page with note
         """
@@ -83,6 +83,22 @@ class UserViewTests(TestCase):
         self.assertContains(response, "Auser's public notes")
         self.assertContains(response, "Le Titre")
         self.assertContains(response, "pour 1 pk pas 2")
+ 
+    def test_user_view_anonyme_with_pub_and_priv_notes(self):
+        """
+        Check user page with note public and private ,
+        L'utilisateur n'etant pas identifier les messages priver
+        ne sont pas lisible
+        """
+        the_user = create_user("Auser",'password')
+        create_note(the_user,"Le Titre de note la note public","Contenu pour tous",True)
+        create_note(the_user,"Une message priver","juste pour moi ",False)
+        response = self.client.get(reverse('x3notes:view_user',args=("Auser",)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Contenu pour tous")
+        self.assertNotContains(response, "juste pour moi")
+
+    # TODO Ajouter un test avec un usager authentifier 
 
     def test_user_view_for_bad_username(self):
         """
@@ -91,3 +107,4 @@ class UserViewTests(TestCase):
         create_user("testuser",'password')
         response = self.client.get(reverse('x3notes:view_user',args=("testuserBAD",)))
         self.assertEqual(response.status_code, 404)
+

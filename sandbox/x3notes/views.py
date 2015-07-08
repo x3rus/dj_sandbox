@@ -33,8 +33,11 @@ def view_user(request,username):
     # user2poll = User.objects.get(username=username)
     user2poll = get_object_or_404(User, username=username)
     public_notes = Note.objects.filter(ispublic=True).filter(owner=user2poll)
+    private_notes = Note.objects.filter(ispublic=False).filter(owner=user2poll)
     context = {'public_notes': public_notes}
-    return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
+    return render(request, 'x3notes/view_user.html', {'username': username,
+                                                     'public_notes': public_notes,
+                                                     'private_notes': private_notes})
 
 # ajout de l'obligation d'authentification
 # @login_required
@@ -54,8 +57,32 @@ def view_user(request,username):
 #    context = {'public_notes': public_notes}
 #    return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
 
+@login_required
+def edit_note(request,note_id):
+    note = get_object_or_404(Note, pk=note_id)
+     # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NoteForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # TODO trouver une autre method pour l'assignation !!!
+            note.title = form.cleaned_data['title']
+            note.text = form.cleaned_data['text']
+            note.ispublic = form.cleaned_data['ispublic']
+            note.owner = request.user
+            note.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('/x3notes/'+ request.user.username)
 
-# TODO : si la personne est pas connecte l'URL de renvoie est errone !!
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NoteForm(note)
+
+    return render(request, 'editnote.html', {'form': form, 'username': request.user.username, 'note_id': note_id })
+
+
 @login_required
 def add_note(request):
     # if this is a POST request we need to process the form data
