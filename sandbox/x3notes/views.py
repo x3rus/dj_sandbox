@@ -54,7 +54,7 @@ def view_user(request,username):
 #    return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
 
 
-# TODO : si la personne est pas connecté l'URL de renvoie est erroné !!
+# TODO : si la personne est pas connecte l'URL de renvoie est errone !!
 @login_required
 def add_note(request,username):
     # if this is a POST request we need to process the form data
