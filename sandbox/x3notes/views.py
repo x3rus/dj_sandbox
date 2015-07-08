@@ -56,7 +56,7 @@ def view_user(request,username):
 
 # TODO : si la personne est pas connecte l'URL de renvoie est errone !!
 @login_required
-def add_note(request,username):
+def add_note(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -72,13 +72,13 @@ def add_note(request,username):
             a_new_note.owner = request.user
             a_new_note.save()
             # redirect to a new URL:
-            return HttpResponseRedirect('/x3notes/'+ username)
+            return HttpResponseRedirect('/x3notes/'+ request.user.username)
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = NoteForm()
 
-    return render(request, 'addnote.html', {'form': form, 'username': username})
+    return render(request, 'addnote.html', {'form': form, 'username': request.user.username })
 
 
 ######################################################################################################
