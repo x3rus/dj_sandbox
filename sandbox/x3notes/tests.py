@@ -10,9 +10,16 @@
 
 from django.test import TestCase
 
+
+
 # Added modules
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+
+# Ajout des models 
+from django.db import models
+from .models import Note, NoteAuthEmail
+
 # Create your tests here.
 
 
@@ -23,8 +30,15 @@ from django.contrib.auth.models import User
 def create_user(username,password):
         u = User.objects.create_user(username, username+"x3rus.com", password)
         u.save()
+        return u
 
-# Index
+def create_note(owner,title,content,ispublic):
+        a_note = Note.objects.create(title=title,text=content,ispublic=ispublic, owner=owner)
+        a_note.save()
+        return a_note
+
+#########
+# Index #
 class IndexViewTests(TestCase):
     def test_index_view_basic(self):
         """
@@ -45,3 +59,35 @@ class IndexViewTests(TestCase):
         self.assertContains(response, "user1")
         self.assertContains(response, "user2")
 
+########################
+# URL de l'utilisateur #
+class UserViewTests(TestCase):
+    def test_user_view_basic_without_note(self):
+        """
+        Check user page without note
+        """
+        create_user("testuser",'password')
+        response = self.client.get(reverse('x3notes:view_user',args=("testuser",)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "testuser's public notes")
+
+    def test_user_view_basic_with_notes(self):
+        """
+        Check user page with note
+        """
+        the_user = create_user("Auser",'password')
+        create_note(the_user,"Le Titre de note","Contenu de la note",True)
+        create_note(the_user,"Un deuxime Titre de note","si ca mache pour 1 pk pas 2 ",True)
+        response = self.client.get(reverse('x3notes:view_user',args=("Auser",)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Auser's public notes")
+        self.assertContains(response, "Le Titre")
+        self.assertContains(response, "pour 1 pk pas 2")
+
+    def test_user_view_for_bad_username(self):
+        """
+        Check user page without note
+        """
+        create_user("testuser",'password')
+        response = self.client.get(reverse('x3notes:view_user',args=("testuserBAD",)))
+        self.assertEqual(response.status_code, 404)

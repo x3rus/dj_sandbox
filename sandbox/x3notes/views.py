@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 
 # Mise en place des racoursis de code 
@@ -30,7 +30,8 @@ def profile_user(request):
 def view_user(request,username):
     # Username donne la string du nom je fais un recherche pour avoir l'object
     # telle que contenu dans la BD
-    user2poll = User.objects.get(username=username)
+    # user2poll = User.objects.get(username=username)
+    user2poll = get_object_or_404(User, username=username)
     public_notes = Note.objects.filter(ispublic=True).filter(owner=user2poll)
     context = {'public_notes': public_notes}
     return render(request, 'x3notes/view_user.html', {'username': username, 'public_notes': public_notes})
