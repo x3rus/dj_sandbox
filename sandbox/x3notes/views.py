@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import Note, NoteAuthEmail
-from .forms import NoteForm
+from .forms import NoteForm, NoteEditForm
 
 
 # Create your views here.
@@ -60,10 +60,14 @@ def view_user(request,username):
 @login_required
 def edit_note(request,note_id):
     note = get_object_or_404(Note, pk=note_id)
+    
+    # TODO Ajouter la restriction si le demandeur est le owner
+    # sinon redirection vers une page d'erreur .
+
      # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = NoteForm(request.POST)
+        form = NoteEditForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -78,9 +82,11 @@ def edit_note(request,note_id):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = NoteForm(note)
+        form = NoteEditForm(instance=note)
 
-    return render(request, 'editnote.html', {'form': form, 'username': request.user.username, 'note_id': note_id })
+    return render(request, 'editnote.html', {'form': form,
+                                            'username': request.user.username,
+                                            'note_id': note_id })
 
 
 @login_required
