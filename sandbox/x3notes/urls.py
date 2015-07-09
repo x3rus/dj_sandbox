@@ -19,6 +19,7 @@ urlpatterns = [
                 url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
                 url(r'^addnote$', views.add_note, name='add_note'),
                 url(r'^editnote/(?P<note_id>[0-9]+)$', views.edit_note, name='edit_note'),
+                url(r'^delnote/(?P<note_id>[0-9]+)$', views.del_note, name='del_note'),
                 url(r'^(?P<username>[a-zA-Z0-9]+)/$', views.view_user, name='view_user'),
 #                url(r'^(?P<username>[a-zA-Z0-9]+)/addnote$', views.add_note, name='add_note'),
 #                url(r'^(?P<username>[a-zA-Z0-9]+)/delnote/?P<note_id>$', views.del_note, name='del_note'),

@@ -108,3 +108,7 @@ class UserViewTests(TestCase):
         response = self.client.get(reverse('x3notes:view_user',args=("testuserBAD",)))
         self.assertEqual(response.status_code, 404)
 
+
+# TODO ajout des test pour l'ajout de note et l'edition
+# TODO ajout des test pour l'edition de note 
+# TODO ajout des test pour la suppression de note 

@@ -87,6 +87,20 @@ def edit_note(request,note_id):
     return render(request, 'editnote.html', {'form': form,
                                             'username': request.user.username,
                                             'note_id': note_id })
+@login_required
+def del_note(request,note_id):
+    note = get_object_or_404(Note, pk=note_id)
+    
+    # TODO eventuellement mettre une confirmation de suppression 
+    # TODO permettre la suppresion en masse de notes
+    if note.owner.username == request.user.username:
+        note_title = note.title
+        note.delete()
+        # return HttpResponseRedirect('/x3notes/'+ request.user.username)
+        return render(request, 'delnote.html' , {'note_title': note_title,
+                                                 'username': request.user.username})
+    else:
+        return render(request, 'x3notes/no_access.html')
 
 
 @login_required

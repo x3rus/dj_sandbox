@@ -3,7 +3,7 @@
 {% if lst_users %}
     <ul>
     {% for user in lst_users %}
-        <li>{{ user.username}}</li>
+        <li><a href="{% url 'x3notes:view_user' user.username %}">{{ user.username }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
