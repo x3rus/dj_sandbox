@@ -112,49 +112,52 @@ class UserViewTests(TestCase):
 
 
 class TestAuthUser(TestCase):
-        def setUp(self):
-            # Every test needs access to the request factory.
-            self.factory = RequestFactory()
-            self.user = User.objects.create_user(
-                            username='aAuthUser', email='aAuthUser@example.com', password='top_secret')
-            self.user2 = User.objects.create_user(
+    """
+        a bunch of test with authentication required.
+    """ 
+    def setUp(self):
+        # Every test needs access to the request factory.
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+        username='aAuthUser', email='aAuthUser@example.com', password='top_secret')
+        self.user2 = User.objects.create_user(
                             username='aSecondUser', email='aSecondUser@example.com', password='top_secret')
-            create_note(self.user,"Une message priver","juste pour moi ",False)
-            create_note(self.user,"Le Titre de note la note public","Contenu pour tous",True)
+        create_note(self.user,"Une message priver","juste pour moi ",False)
+        create_note(self.user,"Le Titre de note la note public","Contenu pour tous",True)
 
-        def test_user_view_auth_with_pub_and_priv_notes(self):
-            """
-            Establish a connection with user = AauthUser and request to view
-            his owne notes , user should see public AND private notes
-            """
-            # Create an instance of a GET request.
-            request = self.factory.get(reverse('x3notes:view_user',args=("AuserAuth",)))
-            # Recall that middleware are not supported. You can simulate a
-            # logged-in user by setting request.user manually.
-            request.user = self.user
+    def test_user_view_auth_with_pub_and_priv_notes(self):
+        """
+        Establish a connection with user = AauthUser and request to view
+        his owne notes , user should see public AND private notes
+        """
+        # Create an instance of a GET request.
+        request = self.factory.get(reverse('x3notes:view_user',args=("AuserAuth",)))
+        # Recall that middleware are not supported. You can simulate a
+        # logged-in user by setting request.user manually.
+        request.user = self.user
 
-            # Test my_view() as if it were deployed at /customer/details
-            response = view_user(request, self.user.username)
-            self.assertEqual(response.status_code, 200)
-            self.assertContains(response, "Contenu pour tous")
-            self.assertContains(response, "juste pour moi")
+        # Request view x3notes/AuserAuth with authenticate user AuserAuth
+        response = view_user(request, self.user.username)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Contenu pour tous")
+        self.assertContains(response, "juste pour moi")
 
-        def test_user_view_auth_with_pub_and_priv_notes_for_other_user(self):
-            """
-            Establish a connection with user2 = aSecondUser and request to view
-            not for user AuserAuth, the user should see public not but not private ones
-            """
-            # Create an instance of a GET request.
-            request = self.factory.get(reverse('x3notes:view_user',args=("AuserAuth",)))
-            # Recall that middleware are not supported. You can simulate a
-            # logged-in user by setting request.user manually.
-            request.user = self.user2
+    def test_user_view_auth_with_pub_and_priv_notes_for_other_user(self):
+        """
+        Establish a connection with user2 = aSecondUser and request to view
+        not for user AuserAuth, the user should see public not but not private ones
+        """
+        # Create an instance of a GET request.
+        request = self.factory.get(reverse('x3notes:view_user',args=("AuserAuth",)))
+        # Recall that middleware are not supported. You can simulate a
+        # logged-in user by setting request.user manually.
+        request.user = self.user2
 
-            # Test my_view() as if it were deployed at /customer/details
-            response = view_user(request, self.user.username)
-            self.assertEqual(response.status_code, 200)
-            self.assertContains(response, "Contenu pour tous")
-            self.assertNotContains(response, "juste pour moi")
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = view_user(request, self.user.username)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Contenu pour tous")
+        self.assertNotContains(response, "juste pour moi")
 
 
 
