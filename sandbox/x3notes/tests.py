@@ -22,7 +22,7 @@ from django.db import models
 
 # local includes 
 from .models import Note, NoteAuthEmail
-from .views import view_user
+from .views import view_user, add_note
 
 # Create your tests here.
 
@@ -63,9 +63,18 @@ class IndexViewTests(TestCase):
         self.assertContains(response, "user1")
         self.assertContains(response, "user2")
 
+    def test_user_view_for_bad_username(self):
+        """
+        Check user page without note
+        """
+        create_user("testuser",'password')
+        response = self.client.get(reverse('x3notes:view_user',args=("testuserBAD",)))
+        self.assertEqual(response.status_code, 404)
+
+
 ########################
 # URL de l'utilisateur #
-class UserViewTests(TestCase):
+class TestAnonymousUser(TestCase):
     def test_user_view_anonyme_without_note(self):
         """
         Check user page without note
@@ -102,13 +111,21 @@ class UserViewTests(TestCase):
         self.assertContains(response, "Contenu pour tous")
         self.assertNotContains(response, "juste pour moi")
 
-    def test_user_view_for_bad_username(self):
+    def test_user_view_anonyme_add_note(self):
         """
-        Check user page without note
+        Try to add a note in anonymous mode
+        get a redirection to the login page
         """
-        create_user("testuser",'password')
-        response = self.client.get(reverse('x3notes:view_user',args=("testuserBAD",)))
-        self.assertEqual(response.status_code, 404)
+        response = self.client.get(reverse('x3notes:add_note'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_view_anonyme_edit_note(self):
+        """
+        Try to edit a note in anonymous mode
+        get a redirection to the login page
+        """
+        response = self.client.get(reverse('x3notes:edit_note', args=("23",)))
+        self.assertEqual(response.status_code, 302)
 
 
 class TestAuthUser(TestCase):
@@ -157,10 +174,29 @@ class TestAuthUser(TestCase):
         response = view_user(request, self.user.username)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Contenu pour tous")
-        self.assertNotContains(response, "juste pour moi")
+ 
+    def test_user_addnote_auth_user(self):
+        """
+        User authenticate and add a note , be sure de form is there
+        """
+        # Create an instance of a GET request.
+        request = self.factory.get(reverse('x3notes:add_note'))
+        # Recall that middleware are not supported. You can simulate a
+        # logged-in user by setting request.user manually.
+        request.user = self.user
+
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = add_note(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "form action=")
 
 
-
+    def test_user_editnote_owne_by_other_user(self):
+        """
+        User authenticate and try to edit a note from a other user
+        """
+        # TODO : completer ce test test_user_editnote_owne_by_other_user
+        print ("ok")
 
 # TODO ajout des test pour l'ajout de note et l'edition
 # TODO ajout des test pour l'edition de note 
