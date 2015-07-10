@@ -16,13 +16,15 @@ from django.test import TestCase, RequestFactory
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.http import Http404, HttpResponse
+
 
 # Ajout des models 
 from django.db import models
 
 # local includes 
 from .models import Note, NoteAuthEmail
-from .views import view_user, add_note
+from .views import view_user, add_note, edit_note , del_note
 
 # Create your tests here.
 
@@ -127,6 +129,16 @@ class TestAnonymousUser(TestCase):
         response = self.client.get(reverse('x3notes:edit_note', args=("23",)))
         self.assertEqual(response.status_code, 302)
 
+    def test_user_view_anonyme_del_note(self):
+        """
+        Try to edit a note in anonymous mode
+        get a redirection to the login page
+        """
+        response = self.client.get(reverse('x3notes:del_note', args=("23",)))
+        self.assertEqual(response.status_code, 302)
+
+
+
 
 class TestAuthUser(TestCase):
     """
@@ -136,11 +148,16 @@ class TestAuthUser(TestCase):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
         self.user = User.objects.create_user(
-        username='aAuthUser', email='aAuthUser@example.com', password='top_secret')
+                            username='aAuthUser', email='aAuthUser@example.com', password='top_secret')
         self.user2 = User.objects.create_user(
                             username='aSecondUser', email='aSecondUser@example.com', password='top_secret')
-        create_note(self.user,"Une message priver","juste pour moi ",False)
+
+        # Creation de note pour aAuthUser
+        create_note(self.user,"Une message priver","juste pour moi ",False) 
         create_note(self.user,"Le Titre de note la note public","Contenu pour tous",True)
+        # Creation de note pour aSecondUser
+        create_note(self.user2,"private message ","a moi pour moi",False)
+        create_note(self.user2,"le publique est cool ","Lisez moi ", True)
 
     def test_user_view_auth_with_pub_and_priv_notes(self):
         """
@@ -195,8 +212,95 @@ class TestAuthUser(TestCase):
         """
         User authenticate and try to edit a note from a other user
         """
-        # TODO : completer ce test test_user_editnote_owne_by_other_user
-        print ("ok")
+        # Create an instance of a GET request. edit_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:edit_note', args=("3",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = edit_note(request,3)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No access")
+
+    def test_user_editnote_owne_by_user(self):
+        """
+        User authenticate and try to edit a note from a other user
+        """
+        # Create an instance of a GET request. edit_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:edit_note', args=("1",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = edit_note(request,1)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "form action=")
+
+    def test_user_editnote_dont_exit(self):
+        """
+        User authenticate and try to edit a note from a other user
+        """
+        # Create an instance of a GET request. edit_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:edit_note', args=("100",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        self.assertRaises(Http404, edit_note, request, "100")
+
+
+    def test_user_delnote_owne_by_other_user(self):
+        """
+        User authenticate and try to delete a note from a other user
+        """
+        # Create an instance of a GET request. del_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:del_note', args=("3",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = del_note(request,3)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No access")
+
+ 
+
+    def test_user_delnote_owne_by_user(self):
+        """
+        User authenticate and try to delete a note from a other user
+        """
+        # Create an instance of a GET request. del_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:del_note', args=("1",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        # Request view x3notes/AuserAuth with authenticate user aSecondUser
+        response = del_note(request,1)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Note deleted")
+
+    def test_user_delnote_dont_exit(self):
+        """
+        User authenticate and try to delete a note from a other user
+        """
+        # Create an instance of a GET request. del_note 3 , note owne by
+        # aSecondUser
+        request = self.factory.get(reverse('x3notes:del_note', args=("100",)))
+        # Authentification avec aAuthUser
+        request.user = self.user
+
+        self.assertRaises(Http404, del_note, request, "100")
+
+
+
+
+
+
+        
 
 # TODO ajout des test pour l'ajout de note et l'edition
 # TODO ajout des test pour l'edition de note 
