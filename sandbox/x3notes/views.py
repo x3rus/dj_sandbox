@@ -63,6 +63,8 @@ def edit_note(request,note_id):
     
     # TODO Ajouter la restriction si le demandeur est le owner
     # sinon redirection vers une page d'erreur .
+    if note.owner.username != request.user.username:
+        return render(request, 'x3notes/no_access.html')
 
      # if this is a POST request we need to process the form data
     if request.method == 'POST':

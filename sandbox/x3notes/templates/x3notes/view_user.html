@@ -1,7 +1,7 @@
 <div>
     {{username}}'s public notes<br>
     {% for note in public_notes %}
-        <h3> {{note.title}} </h3>
+    <h3> #{{note.id}} {{note.title}}  </h3>
         {{note.text}} <br>
         owner : {{note.owner}} <br>
     {% endfor %}
