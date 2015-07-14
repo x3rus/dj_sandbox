@@ -1,3 +1,8 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'x3notes/style.css' %}" />
+
+
 <div>
     {{username}}'s public notes<br>
     {% for note in public_notes %}
@@ -17,3 +22,5 @@
     <a href="{% url 'x3notes:add_note' %}"> Add a new Note</a>
 {% endif %}
 </div>
+<br>
+<br>
