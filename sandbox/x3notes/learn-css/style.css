@@ -9,7 +9,10 @@ li a {
 
 #main {
     width: 600px;
-    margin: 20 auto; 
+    margin: 100px auto 100px; 
+    -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                 box-sizing: border-box;
 }
 
 .public{
@@ -36,13 +39,26 @@ li a {
                 box-sizing: border-box;
 }
 
+#header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    border-color: green;
+    border-style: solid;
+    border-width: 10px;
+    -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+}
+
 .note{
     position: relative;
 }
 .note-priv{
     position: relative;
     top: -20px;
-    left: 20;
+    left: -20;
 }
 
     /* body {
