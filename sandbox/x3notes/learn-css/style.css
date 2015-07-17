@@ -1,11 +1,32 @@
 /* 
  * Tutorial : http://learnlayout.com/
  * http://learnlayout.com/position.html
+ * Site web d'inspiration pour les coleurs du CSS :
+ * http://tympanus.net/codrops/2011/12/08/25-examples-of-perfect-color-combinations-in-web-design/
  * */
 
-li a {
-    color: green;
+/*
+ * combainison de couleur: 
+ *
+    background-color: #E3DEC1; == gris
+    background-color:#B94629; == orange "foncé"
+    background-color:#E89F65; == bleu "pale" 
+    background-color:#47AFAF; == orange claire
+
+ */
+
+@font-face {
+       font-family: Alegreya-Bold;
+       src: url(font/Alegreya-Bold.ttf);
 }
+
+li a {
+    color: white;
+}
+
+body {
+        background-color: #E3DEC1;
+    } 
 
 #main {
     width: 600px;
@@ -43,14 +64,71 @@ li a {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: black;
+/*    background-color: black;
     border-color: green;
     border-style: solid;
-    border-width: 10px;
+    border-width: 10px;*/
     -webkit-box-sizing: border-box;
            -moz-box-sizing: border-box;
                 box-sizing: border-box;
+    height:70px;
+    display: table;
 }
+
+.header_central {
+/*    width:360px;*/
+    height:50px;
+    background-color:#B94629;
+    display: table-cell;
+}
+
+.header_left, .header_right , .header_left_img {
+    vertical-align: middle;
+    min-height: 50em;
+    height:50px;        
+    display: table-cell;
+    background-color:#47AFAF;
+}
+
+.header_left img {
+    vertical-align: middle;
+} 
+.header_left ul li 
+{
+ /*       display:inline; */
+        margin: 5px;
+        display: inline-block;  /* TODO voir la difference entre inline et inline-block */
+        vertical-align: middle; /* | top | bottom */
+        font-family: Alegreya-Bold;
+        font-size: 20px;
+}
+
+.header_right ul li 
+{
+ /*       display:inline; */
+        horizontal-align: right; /* TODO aligner a droite */
+        margin: 5px;
+        display: inline-block;  /* TODO voir la difference entre inline et inline-block */
+        vertical-align: middle; /* | top | bottom */
+        font-family: Alegreya-Bold;
+        font-size: 20px;
+}
+
+
+
+.header_right {
+    background-color:#E89F65;
+
+}
+.header_left_img {
+    width:70px;
+    min-height: 50em;
+    height:50px;        
+    display: table-cell;
+    background-color:#47AFAF;
+}
+
+
 
 .note{
     position: relative;
