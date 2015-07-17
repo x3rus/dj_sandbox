@@ -20,6 +20,16 @@
        src: url(font/Alegreya-Bold.ttf);
 }
 
+@font-face {
+       font-family: OpenSans;
+       src: url(font/OpenSans-Regular.ttf);
+}
+
+@font-face {
+       font-family: DancingScript-Bold;
+       src: url(font/DancingScript-Bold.ttf);
+}
+
 li a {
     color: white;
 }
@@ -73,13 +83,20 @@ body {
                 box-sizing: border-box;
     height:70px;
     display: table;
+    border-color: #B94629;
+    border-style: solid;
 }
 
 .header_central {
 /*    width:360px;*/
     height:50px;
-    background-color:#B94629;
+    /* background-color:#B94629; */
+    background-color:#E89F65;
     display: table-cell;
+    font-family: DancingScript-Bold; 
+    vertical-align: middle; /* | top | bottom */
+    font-size: 40px;
+    color: white;
 }
 
 .header_left, .header_right , .header_left_img {
@@ -87,7 +104,8 @@ body {
     min-height: 50em;
     height:50px;        
     display: table-cell;
-    background-color:#47AFAF;
+    /* background-color:#47AFAF; */
+    background-color:#E89F65;
 }
 
 .header_left img {
@@ -117,7 +135,8 @@ body {
 
 
 .header_right {
-    background-color:#E89F65;
+    /* background-color:#E89F65; */
+    text-align:right;
 
 }
 .header_left_img {
@@ -125,7 +144,8 @@ body {
     min-height: 50em;
     height:50px;        
     display: table-cell;
-    background-color:#47AFAF;
+    /*background-color:#47AFAF;*/
+    background-color:#E89F65;
 }
 
 
