@@ -30,9 +30,9 @@
        src: url(font/DancingScript-Bold.ttf);
 }
 
-li a {
+/*li a {
     color: white;
-}
+}*/
 
 body {
         background-color: #E3DEC1;
@@ -40,35 +40,53 @@ body {
 
 #main {
     width: 600px;
-    margin: 100px auto 100px; 
+    margin: 100px 0px 20px; 
     -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
                  box-sizing: border-box;
 }
 
 .public{
-    width: 500px;
-    margin: 20px auto;
-    /*background-color: blue;
-    border-width: 20px; */
-    border-color: blue;
-    border-style: solid;
+    width: 700px;
+    margin: 20px 60px 30px;
     -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
                  box-sizing: border-box;
 }
 
+.public h2 {
+    font-family: Alegreya-Bold;
+    font-size: 40px;
+    color: #ac3b1c;
+}
+
+.note-title{
+    /* http://www.w3.org/TR/html-markup/h3.html */
+     display: block;
+     font-size: 1.17em;
+     margin-before: 1em;
+     margin-after: 1em;
+     margin-start: 0;
+     margin-end: 0;
+     font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
 .private{
-    width: 500px;
-    margin: 20px auto;
-    /* padding: 50px; */
-    border-width: 20px;
-    border-color: red;
-    border-style: solid;
+    width: 700px;
+    margin: 20px 60px 30px;
     -webkit-box-sizing: border-box;
            -moz-box-sizing: border-box;
                 box-sizing: border-box;
 }
+
+.private h2 {
+    font-family: Alegreya-Bold;
+    font-size: 40px;
+    color: #47afaf;
+}
+
 
 #header{
     position: fixed;
@@ -106,6 +124,11 @@ body {
     display: table-cell;
     /* background-color:#47AFAF; */
     background-color:#E89F65;
+    color: white;
+}
+
+.header_left li a {
+    color: white;
 }
 
 .header_left img {
@@ -133,6 +156,10 @@ body {
 }
 
 
+.header_right li a {
+    color: white;
+}
+
 
 .header_right {
     /* background-color:#E89F65; */
@@ -152,14 +179,9 @@ body {
 
 .note{
     position: relative;
+    font-family: OpenSans;
 }
 .note-priv{
     position: relative;
-    top: -20px;
-    left: -20;
+    font-family: OpenSans;
 }
-
-    /* body {
-    background: white url("images/grass4.png") no-repeat bottom left;
-    } */
-

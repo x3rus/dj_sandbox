@@ -1,6 +1,17 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+    jQuery(".content").hide();
+    //toggle the componenet with class msg_body
+    jQuery(".note-title").click(function()
+    {
+        jQuery(this).next(".content").slideToggle(500);
+    });
+});
+</script>
 </head>
 
 <body>
@@ -30,42 +41,66 @@
 <div id="main">
 
     <div class="public">
-    xerus's public notes<br>
+     <h2>xerus's public notes</h2>
     
     <div class="note" >
-    <h3> #6 tooto pour astro  </h3>
-        ok j&#39;ajoute une note <br>
-        owner : xerus <br>
+        <div class="note-title"> #6 tooto pour astro  </div>
+            <div class="content">
+            <p>
+            ok j&#39;ajoute une note <br>
+            owner : xerus <br>
+            </p>
+            </div>
+        </div>
     </div>
     
     <div class="note" >
-    <h3> #7 un test sans le user dans l&#39;URL  </h3>
-        test pour valider que c plus propre <br>
-        owner : xerus <br>
+        <div class="note-title"> #7 un test sans le user dans l&#39;URL  </div>
+            <div class="content">
+            <p>
+            test pour valider que c plus propre <br>
+            owner : xerus <br>
+            </p>
+            </div>
+        </div>
     </div>
     
     <div class="note" >
-    <h3> #10 un note pour le public  </h3>
-        blabla toi aussi c super interessant <br>
-        owner : xerus <br>
-    </div>
+        <div class="note-title"> #10 un note pour le public  </div>
+            <div class="content">
+            <p>
+            blabla toi aussi c super interessant <br>
+            owner : xerus <br>
+            </p>
+            </div>
+        </div>
     </div>
     
 
 <hr color="blue"> 
     <div class="private">
-    xerus's private notes<br>
+        <h2>    xerus's private notes</h2>
     
         <div class="note-priv" >
-        <h3> super ca marche </h3>
-        Super cool ca marche ca va finir par fonctioner <br>
-        owner : xerus <br>
+            <div class="note-title"> super ca marche </div>
+                <div class="content">
+                <p>
+                Super cool ca marche ca va finir par fonctioner <br>
+                owner : xerus <br>
+                </p>
+                </div>
+            </div>
         </div>
     
         <div class="note-priv" >
-        <h3> note prive par interface </h3>
-        toto <br>
-        owner : xerus <br>
+            <div class="note-title"> note prive par interface </div>
+                <div class="content">
+                <p>
+                toto <br>
+                owner : xerus <br>
+                </p>
+                </div>
+            </div>
         </div>
     </div>
     
