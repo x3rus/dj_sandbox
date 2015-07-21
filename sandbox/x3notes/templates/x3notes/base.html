@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'x3notes/style.css' %}" />
+        <title>{% block title %}X3notes {% endblock %}</title>
+    </head>
+
+    <!-- 
+        ######## BODY #######
+    -->
+    <body>
+
+        <!-- ### HEADER ### -->
+        <div id="header">
+            <div class="header_left">
+                <ul>
+                    <li> <img src="images/logo-small.png" alt="Logo small" style="float;width:50px;height:35px;" > </li>
+                    <li> <a href="/x3notes/">home page </a></li> 
+                </ul>
+            </div> <!--Fin header_left -->
+            <div class="header_central">
+                <b> X3notes :D </b>
+            </div> <!--Fin header_central -->
+            <div class="header_right">
+                <ul>
+                    <li> <a href="/x3notes/login">login </a></li> 
+                    <li> <a href="/x3notes/logout">logout </a></li> 
+                </ul>
+            </div><!--Fin header_right-->
+        </div> <!-- Fin header -->
+
+
+        <!-- ### MAIN ### -->
+        <div id="main">
+            {% block content %}{% endblock %}
+        </div> <!-- Fin MAIN -->
+
+    </body>
+</html>

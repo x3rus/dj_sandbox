@@ -1,9 +1,187 @@
-li a {
-        color: green;
-    }
+/* 
+ * Tutorial : http://learnlayout.com/
+ * http://learnlayout.com/position.html
+ * Site web d'inspiration pour les coleurs du CSS :
+ * http://tympanus.net/codrops/2011/12/08/25-examples-of-perfect-color-combinations-in-web-design/
+ * */
 
+/*
+ * combainison de couleur: 
+ *
+    background-color: #E3DEC1; == gris
+    background-color:#B94629; == orange "foncé"
+    background-color:#E89F65; == bleu "pale" 
+    background-color:#47AFAF; == orange claire
+
+ */
+
+@font-face {
+       font-family: Alegreya-Bold;
+       src: url(font/Alegreya-Bold.ttf);
+}
+
+@font-face {
+       font-family: OpenSans;
+       src: url(font/OpenSans-Regular.ttf);
+}
+
+@font-face {
+       font-family: DancingScript-Bold;
+       src: url(font/DancingScript-Bold.ttf);
+}
+
+/*li a {
+    color: white;
+}*/
 
 body {
-        background: white url("images/grass4.png") no-repeat bottom;
-    }
+        background-color: #E3DEC1;
+    } 
 
+#main {
+    width: 600px;
+    margin: 100px 0px 20px; 
+    -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                 box-sizing: border-box;
+}
+
+.public{
+    width: 700px;
+    margin: 20px 60px 30px;
+    -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                 box-sizing: border-box;
+}
+
+.public h2 {
+    font-family: Alegreya-Bold;
+    font-size: 40px;
+    color: #ac3b1c;
+}
+
+.note-title{
+    /* http://www.w3.org/TR/html-markup/h3.html */
+     display: block;
+     font-size: 1.17em;
+     margin-before: 1em;
+     margin-after: 1em;
+     margin-start: 0;
+     margin-end: 0;
+     font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.private{
+    width: 700px;
+    margin: 20px 60px 30px;
+    -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+}
+
+.private h2 {
+    font-family: Alegreya-Bold;
+    font-size: 40px;
+    color: #47afaf;
+}
+
+
+#header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+/*    background-color: black;
+    border-color: green;
+    border-style: solid;
+    border-width: 10px;*/
+    -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    height:70px;
+    display: table;
+    border-color: #B94629;
+    border-style: solid;
+}
+
+.header_central {
+/*    width:360px;*/
+    height:50px;
+    /* background-color:#B94629; */
+    background-color:#E89F65;
+    display: table-cell;
+    font-family: DancingScript-Bold; 
+    vertical-align: middle; /* | top | bottom */
+    font-size: 40px;
+    color: white;
+}
+
+.header_left, .header_right , .header_left_img {
+    vertical-align: middle;
+    min-height: 50em;
+    height:50px;        
+    display: table-cell;
+    /* background-color:#47AFAF; */
+    background-color:#E89F65;
+    color: white;
+}
+
+.header_left li a {
+    color: white;
+}
+
+.header_left img {
+    vertical-align: middle;
+} 
+.header_left ul li 
+{
+ /*       display:inline; */
+        margin: 5px;
+        display: inline-block;  /* TODO voir la difference entre inline et inline-block */
+        vertical-align: middle; /* | top | bottom */
+        font-family: Alegreya-Bold;
+        font-size: 20px;
+}
+
+.header_right ul li 
+{
+ /*       display:inline; */
+        horizontal-align: right; /* TODO aligner a droite */
+        margin: 5px;
+        display: inline-block;  /* TODO voir la difference entre inline et inline-block */
+        vertical-align: middle; /* | top | bottom */
+        font-family: Alegreya-Bold;
+        font-size: 20px;
+}
+
+
+.header_right li a {
+    color: white;
+}
+
+
+.header_right {
+    /* background-color:#E89F65; */
+    text-align:right;
+
+}
+.header_left_img {
+    width:70px;
+    min-height: 50em;
+    height:50px;        
+    display: table-cell;
+    /*background-color:#47AFAF;*/
+    background-color:#E89F65;
+}
+
+
+
+.note{
+    position: relative;
+    font-family: OpenSans;
+}
+.note-priv{
+    position: relative;
+    font-family: OpenSans;
+}
