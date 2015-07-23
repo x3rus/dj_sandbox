@@ -4,6 +4,7 @@
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'x3notes/style.css' %}" />
         <title>{% block title %}X3notes {% endblock %}</title>
+        {% block script %} {% endblock %}
     </head>
 
     <!-- 
@@ -15,7 +16,7 @@
         <div id="header">
             <div class="header_left">
                 <ul>
-                    <li> <img src="images/logo-small.png" alt="Logo small" style="float;width:50px;height:35px;" > </li>
+                    <li> <img src="{% static 'x3notes/images/logo-small.png' %}" alt="Logo small" style="float;width:50px;height:35px;" > </li>
                     <li> <a href="/x3notes/">home page </a></li> 
                 </ul>
             </div> <!--Fin header_left -->

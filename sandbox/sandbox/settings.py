@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Lors de l'authentification dans l'application redirection
 # vers la page de profile custome
 # DEFAULT LOGIN_REDIRECT_URL="/account/profile/"
-LOGIN_REDIRECT_URL="/x3notes/profile/"
+LOGIN_REDIRECT_URL="/x3notes/"
 LOGIN_URL = "/x3notes/login/"
 
 # Application definition

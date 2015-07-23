@@ -4,6 +4,7 @@
 
 {% block title %}{{username}}'s notes {% endblock %}
 
+{% block script %}
 {# ajout des scripts ajax pour visualiser les notes #}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript">
@@ -16,6 +17,7 @@
     });
 });
 </script>
+{% endblock %}
 
 
 {% block content %}
@@ -25,11 +27,13 @@
     
     {% for note in public_notes %}
         <div class="note" >
-            <div class="note-title"> #{{note.id}} {{note.title}} [+] </div>
+            <div class="note-title"> #{{note.id}}# {{note.title}} [+] </div>
             <div class="content">
                 <p>
                 {{note.text}} 
-                {# <br> <a href="{% url 'x3notes:delnote' %}"> delete the note </a> #}
+                {# <br> <a href="{% url "x3notes:delnote" note.id %}"> delete the note </a>  #}
+                <br> <a href="{% url "x3notes:del_note" note.id %}"> delete the note </a> 
+
                 </p>
             </div> <!--  Fin content -->
         </div> <!-- Fin note -->
@@ -47,7 +51,7 @@
             <div class="content">
                 <p>
                 {{note.text}} 
-                {# <br> <a href="{% url 'x3notes:delnote' %}"> delete the note </a> #}
+                 <br> <a href="{% url 'x3notes:del_note' note.id %}"> delete the note </a> 
                 </p>
             </div> <!--  Fin content -->
         </div> <!-- fin note-priv -->

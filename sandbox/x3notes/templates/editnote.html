@@ -1,6 +1,14 @@
+{% extends "x3notes/base.html" %}
+
+{% block title %}{{username}}'s notes {% endblock %}
+
+{% block content %}
+
 <h1> Edit note for {{username}} </h1>
 <form action="{% url 'x3notes:edit_note' note_id %} " method="post"> 
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />
 </form>
+
+{% endblock %}
