@@ -1,2 +1,1 @@
-# TODO : ajouter de l'information
-# un environnement pour prendre en main le framwork de django !
+# un environnement pour prendre me faire la main sur le framwork de django !
